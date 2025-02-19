@@ -149,3 +149,7 @@
   (emms-all)
   (setq emms-player-list '(emms-player-vlc)
 	emms-info-functions '(emms-info-native)))
+
+(use-package eat
+  :ensure t
+  :hook ((eshell-load . eat-eshell-mode)))
