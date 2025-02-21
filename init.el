@@ -1,24 +1,13 @@
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  )
+
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
  '(default ((t (:family "Berkeley Mono" :foundry "UKWN" :slant normal :weight normal :height 120 :width normal)))))
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
-(global-display-line-numbers-mode 1)
-(global-prettify-symbols-mode 1)
-
-(put 'dired-find-alternate-file 'disabled nil)
 (setq make-backup-files nil)
 (global-set-key (kbd "C-z") nil)
 
@@ -26,12 +15,40 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-;; (package-refresh-contents)
+(package-refresh-contents)
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
 (require 'use-package)
+
+(use-package dired
+  :config
+  (put 'dired-find-alternate-file 'disabled nil))
+
+(use-package display-line-numbers
+  :hook
+  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode c-mode c++-mode haskell-mode))
+
+(use-package prettify-symbols
+  :hook
+  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode sly-mrepl-mode geiser-repl-mode))
+
+(use-package flyspell
+  :hook (erc-mode telega-chat-mode))
+
+(use-package rainbow-delimiters
+  :ensure t
+  :hook
+  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode sly-mrepl-mode geiser-repl-mode))
+
+(use-package paredit
+  :ensure t
+  :hook ((emacs-lisp-mode lisp-mode scheme-mode) . enable-paredit-mode))
+
+(use-package emojify
+  :ensure t
+  :hook (eww telega-root-mode telega-chat-mode))
 
 (use-package doom-themes
   :ensure t
@@ -47,101 +64,61 @@
 
 (use-package company
   :ensure t
-  :hook ((after-init . global-company-mode)))
+  :hook (after-init . global-company-mode))
 
 (use-package flycheck
   :ensure t
-  :hook ((after-init . global-flycheck-mode)))
+  :hook (after-init . global-flycheck-mode))
 
 (use-package yasnippet
   :ensure t
-  :hook ((after-init . yas-global-mode)))
+  :hook (after-init . yas-global-mode))
 
 (use-package yasnippet-snippets
   :after (yasnippet)
   :ensure t
-  :config
-  (setq yas-snippet-dirs
-	(list (concat user-emacs-directory "snippets"))))
+  :config (setq yas-snippet-dirs (list (concat user-emacs-directory "snippets"))))
 
 (use-package haskell-mode
   :ensure t)
 
 (use-package geiser
   :ensure t
-  :config
-  (setq geiser-active-implementations '(mit)))
+  :config (setq geiser-active-implementations '(mit)))
 
 (use-package geiser-mit
   :ensure t
-  :config
-  (setq geiser-mit-binary "/usr/bin/scheme"))
+  :config (setq geiser-mit-binary "/path/to/scheme"))
 
 (use-package sly
   :ensure t
-  :config
-  (setq inferior-lisp-program "/usr/bin/sbcl"))
-
-(use-package paredit
-  :ensure t
-  :hook ((emacs-lisp-mode .         enable-paredit-mode)
-	 (lisp-mode .               enable-paredit-mode)
-	 (scheme-mode .             enable-paredit-mode)))
-
-(use-package rainbow-delimiters
-  :ensure t
-  :hook ((emacs-lisp-mode .         rainbow-delimiters-mode)
-	 (lisp-mode .               rainbow-delimiters-mode)
-	 (lisp-interaction-mode .   rainbow-delimiters-mode)
-	 (sly-mrepl-mode .          rainbow-delimiters-mode)
-	 (scheme-mode .             rainbow-delimiters-mode)
-	 (geiser-repl-mode .        rainbow-delimiters-mode)))
+  :config (setq inferior-lisp-program "/path/to/sbcl"))
 
 (use-package eglot
   :ensure t
   :config 
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
-  :hook ((c-mode . eglot-ensure)
-	 (c++-mode . eglot-ensure)))
-
-(use-package erc
-  :ensure t
-  :hook ((erc-mode      . flyspell-mode)
-	 (erc-mode      . (lambda () (display-line-numbers-mode -1)))))
+  :hook ((c-mode c++-mode) . eglot-ensure))
 
 (defun erc-libera ()
   (interactive)
   (erc-tls :server "irc.libera.chat"
            :port 6697
-           :nick "<nick>"
+           :nick "<nickname>"
            :password "<password>"))
 
 (defun erc-slash ()
   (interactive)
   (erc-tls :server "irc.slashnet.org"
            :port 6697
-           :nick "<nick>"
+           :nick "<nickname>"
            :password "<password>"))
-
-(use-package emojify
-  :ensure t)
 
 (use-package telega
   :ensure t
   :hook
-  ((telega-chat-mode . flyspell-mode)
-   (telega-chat-mode . telega-auto-download-mode)
-   (telega-chat-mode . telega-autoplay-mode)
-   (telega-chat-mode . emojify-mode)
-   (telega-chat-mode . (lambda () (display-line-numbers-mode -1)))
-   (telega-root-mode . emojify-mode)
-   (telega-root-mode . (lambda () (display-line-numbers-mode -1)))))
-
-(use-package eww
-  :ensure t
-  :hook
-  ((eww-mode . emojify-mode)
-   (eww-mode . (lambda () (display-line-numbers-mode -1)))))
+  ((telega-chat-mode . telega-auto-download-mode)
+   (telega-chat-mode . telega-autoplay-mode)))
 
 (use-package emms
   :ensure t
@@ -152,4 +129,4 @@
 
 (use-package eat
   :ensure t
-  :hook ((eshell-load . eat-eshell-mode)))
+  :hook (eshell-load . eat-eshell-mode))

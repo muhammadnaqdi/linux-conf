@@ -21,7 +21,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "alacritty"
+myTerminal      = "emacsclient -cqe '(eat)'"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -67,7 +67,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return   ), spawn $ XMonad.terminal conf)
 
     -- lunch emacsclient
-    , ((modm .|. shiftMask, xK_BackSpace), spawn "emacsclient -c")
+    , ((modm .|. shiftMask, xK_BackSpace), spawn "emacsclient -cq")
 
     -- launch dmenu
     , ((modm,                  xK_p     ), spawn "dmenu_run")
@@ -303,7 +303,7 @@ help :: String
 help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "",
     "-- launching and     killing programs",
-    "mod-Shift-Enter      Launch alacritty terminal",
+    "mod-Shift-Enter      Launch Emulate a Terminal in an Emacsclient frame",
     "mod-Shift-Backspace  Lunch emacsclient",
     "mod-p                Launch dmenu",
     "mod-Shift-p          Launch gmrun",
