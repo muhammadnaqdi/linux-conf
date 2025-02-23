@@ -32,7 +32,7 @@
 
 (use-package prettify-symbols
   :hook
-  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode sly-mrepl-mode geiser-repl-mode))
+  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode eshell-mode sly-mrepl-mode geiser-repl-mode))
 
 (use-package flyspell
   :hook (erc-mode telega-chat-mode))
@@ -40,11 +40,12 @@
 (use-package rainbow-delimiters
   :ensure t
   :hook
-  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode sly-mrepl-mode geiser-repl-mode))
+  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode eshell-mode sly-mrepl-mode geiser-repl-mode))
 
 (use-package paredit
   :ensure t
-  :hook ((emacs-lisp-mode lisp-mode scheme-mode) . enable-paredit-mode))
+  :hook
+  ((emacs-lisp-mode lisp-mode scheme-mode) . enable-paredit-mode))
 
 (use-package emojify
   :ensure t
@@ -105,17 +106,28 @@
   (erc-tls :server "irc.libera.chat"
            :port 6697
            :nick "<nickname>"
-           :password "<password>"))
+           :password "password>"))
 
 (defun erc-slash ()
   (interactive)
   (erc-tls :server "irc.slashnet.org"
            :port 6697
            :nick "<nickname>"
-           :password "<password>"))
+           :password "password>"))
+
 
 (use-package telega
   :ensure t
+  :config
+  (setq telega-chat-bidi-display-reordering t)
+  (setq telega-emoji-large-height nil)
+  (setq telega-chat-show-avatars nil)
+  (setq telega-chat-input-markups (list nil "markdown1" "markdown2" "org"))
+  (mapc (lambda (char)
+          (set-fontset-font "fontset-default" char "Vazirmatn"))
+        (list (cons (decode-char 'ucs #x0609) (decode-char 'ucs #x06F9))
+              (decode-char 'ucs #x00AB)
+              (decode-char 'ucs #x00BB)))
   :hook
   ((telega-chat-mode . telega-auto-download-mode)
    (telega-chat-mode . telega-autoplay-mode)))
