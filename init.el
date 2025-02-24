@@ -106,14 +106,14 @@
   (erc-tls :server "irc.libera.chat"
            :port 6697
            :nick "<nickname>"
-           :password "password>"))
+           :password "<password>"))
 
 (defun erc-slash ()
   (interactive)
   (erc-tls :server "irc.slashnet.org"
            :port 6697
            :nick "<nickname>"
-           :password "password>"))
+           :password "<password>"))
 
 
 (use-package telega
