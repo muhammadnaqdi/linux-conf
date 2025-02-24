@@ -259,7 +259,8 @@ myStartupHook = do
   spawnOnce "numlockx on"
   spawnOnce "unclutter -root -idle 8 &"
   spawnOnce "trayer --transparent true --alpha 191 &"
-
+  spawnOnce "/usr/lib/notification-daemon/notification-daemon &"
+  
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 

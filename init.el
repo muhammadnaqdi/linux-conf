@@ -142,3 +142,6 @@
 (use-package eat
   :ensure t
   :hook (eshell-load . eat-eshell-mode))
+
+(use-package sml-mode
+  :ensure t)
