@@ -1,4 +1,4 @@
-mkdir -p ~/backgrounds ~/gits ~/keys ~/scripts ~/tmp ~/.config/alacritty ~/.xmonad ~/roms ~/apps ~/projects ~/.eat
+mkdir -p ~/backgrounds ~/gits ~/keys ~/scripts ~/tmp ~/.config/alacritty ~/.xmonad ~/roms ~/apps ~/projects ~/.eat ~/.alerts
 
 cp -f vimrc ~/.vimrc
 cp -f init.el ~/.emacs
@@ -8,6 +8,7 @@ cp -f xmobarrc ~/.xmobarrc
 cp -f xmonad.hs ~/.xmonad/xmonad.hs
 cp -f backgrounds/plain.png ~/backgrounds/plain.png
 cp -f eat/bash ~/.eat/bash
+cp -f alerts/* ~/.alerts/
 
 if [[ -z $(grep '# user' ~/.profile) ]]
 then

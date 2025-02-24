@@ -1,7 +1,15 @@
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 (custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:family "Berkeley Mono" :foundry "UKWN" :slant normal :weight normal :height 120 :width normal)))))
 
 (menu-bar-mode -1)
@@ -22,19 +30,27 @@
 
 (require 'use-package)
 
-(use-package dired
+(use-package org
+  :ensure nil
   :config
-  (put 'dired-find-alternate-file 'disabled nil))
+  (org-element-cache-reset 'all)
+  (setq org-clock-sound "~/.alerts/click.wav"))
+
+  (use-package dired
+    :ensure nil
+    :config (put 'dired-find-alternate-file 'disabled nil))
 
 (use-package display-line-numbers
-  :hook
-  (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode c-mode c++-mode haskell-mode))
+  :ensure nil
+  :hook (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode c-mode c++-mode haskell-mode))
 
 (use-package prettify-symbols
+  :ensure nil
   :hook
   (emacs-lisp-mode lisp-mode lisp-interaction-mode scheme-mode eshell-mode sly-mrepl-mode geiser-repl-mode))
 
 (use-package flyspell
+  :ensure nil
   :hook (erc-mode telega-chat-mode))
 
 (use-package rainbow-delimiters
@@ -44,8 +60,7 @@
 
 (use-package paredit
   :ensure t
-  :hook
-  ((emacs-lisp-mode lisp-mode scheme-mode) . enable-paredit-mode))
+  :hook ((emacs-lisp-mode lisp-mode scheme-mode) . enable-paredit-mode))
 
 (use-package emojify
   :ensure t
@@ -89,11 +104,11 @@
 
 (use-package geiser-mit
   :ensure t
-  :config (setq geiser-mit-binary "/path/to/scheme"))
+  :config (setq geiser-mit-binary "/usr/bin/scheme"))
 
 (use-package sly
   :ensure t
-  :config (setq inferior-lisp-program "/path/to/sbcl"))
+  :config (setq inferior-lisp-program "/usr/bin/sbcl"))
 
 (use-package eglot
   :ensure t
@@ -105,15 +120,15 @@
   (interactive)
   (erc-tls :server "irc.libera.chat"
            :port 6697
-           :nick "<nickname>"
-           :password "<password>"))
+           :nick "Hushang"
+           :password "kwQ9%gp2pbC/7N+"))
 
 (defun erc-slash ()
   (interactive)
   (erc-tls :server "irc.slashnet.org"
            :port 6697
-           :nick "<nickname>"
-           :password "<password>"))
+           :nick "Hushang"
+           :password "14pG$9+3R;ej"))
 
 
 (use-package telega
