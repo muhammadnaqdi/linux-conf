@@ -134,10 +134,10 @@
 (use-package telega
   :ensure t
   :config
-  (setq telega-chat-bidi-display-reordering t)
-  (setq telega-emoji-large-height nil)
-  (setq telega-chat-show-avatars nil)
-  (setq telega-chat-input-markups (list nil "markdown1" "markdown2" "org"))
+  (setq telega-chat-bidi-display-reordering t
+	telega-emoji-large-height nil
+	telega-chat-show-avatars nil
+	telega-chat-input-markups (list nil "markdown1" "markdown2" "org"))
   (mapc (lambda (char)
           (set-fontset-font "fontset-default" char "Vazirmatn"))
         (list (cons (decode-char 'ucs #x0609) (decode-char 'ucs #x06F9))
