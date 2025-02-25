@@ -104,11 +104,11 @@
 
 (use-package geiser-mit
   :ensure t
-  :config (setq geiser-mit-binary "/usr/bin/scheme"))
+  :config (setq geiser-mit-binary "/path/to/scheme"))
 
 (use-package sly
   :ensure t
-  :config (setq inferior-lisp-program "/usr/bin/sbcl"))
+  :config (setq inferior-lisp-program "/path/to/sbcl"))
 
 (use-package eglot
   :ensure t
@@ -120,15 +120,15 @@
   (interactive)
   (erc-tls :server "irc.libera.chat"
            :port 6697
-           :nick "Hushang"
-           :password "kwQ9%gp2pbC/7N+"))
+           :nick "<nickname>"
+           :password "<password>"))
 
 (defun erc-slash ()
   (interactive)
   (erc-tls :server "irc.slashnet.org"
            :port 6697
-           :nick "Hushang"
-           :password "14pG$9+3R;ej"))
+           :nick "<nickname>"
+           :password "<password>"))
 
 
 (use-package telega
@@ -144,8 +144,9 @@
               (decode-char 'ucs #x00AB)
               (decode-char 'ucs #x00BB)))
   :hook
-  ((telega-chat-mode . telega-auto-download-mode)
-   (telega-chat-mode . telega-autoplay-mode)))
+  ((telega-load . telega-auto-download-mode)
+   (telega-load . telega-autoplay-mode)
+   (telega-load . telega-notifications-mode)))
 
 (use-package emms
   :ensure t
