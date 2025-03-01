@@ -20,3 +20,5 @@ then
     
     apt -y install -t bookworm-backports emacs
 fi
+
+sysctl -w vm.max_map_count=1048576
