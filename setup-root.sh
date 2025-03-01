@@ -5,8 +5,11 @@ apt -y purge ibus
 apt -y autopurge
 apt -y clean
 
+mkdir -p /etc/sysctl.d
+
 cp -f keyboard /etc/default/keyboard
 cp -f fonts/* /usr/local/share/fonts/
+cp -f 99-max-map-count.conf /etc/sysctl.d/99-max-map-count.conf
 
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -20,5 +23,3 @@ then
     
     apt -y install -t bookworm-backports emacs
 fi
-
-sysctl -w vm.max_map_count=1048576
