@@ -34,7 +34,8 @@
   :ensure nil
   :config
   (org-element-cache-reset 'all)
-  (setq org-clock-sound "~/.alerts/click.wav"))
+  (setq org-clock-sound "~/.alerts/click.wav"
+	org-export-with-broken-links t))
 
   (use-package dired
     :ensure nil
@@ -104,11 +105,11 @@
 
 (use-package geiser-mit
   :ensure t
-  :config (setq geiser-mit-binary "/path/to/scheme"))
+  :config (setq geiser-mit-binary "/usr/bin/scheme"))
 
 (use-package sly
   :ensure t
-  :config (setq inferior-lisp-program "/path/to/sbcl"))
+  :config (setq inferior-lisp-program "/usr/bin/sbcl"))
 
 (use-package eglot
   :ensure t
@@ -161,3 +162,42 @@
 
 (use-package sml-mode
   :ensure t)
+
+(defalias 'soxan-clear-news
+   (kmacro "M-< C-s i n d e x . h t m l <return> <return> C-s ت ا ز ه ‌ ه ا <return> C-s < u l <return> C-n C-a C-SPC C-s < / u l C-a <backspace> C-x C-s C-x k <return>"))
+
+(defalias 'soxan-add-to-news
+   (kmacro "C-e C-x C-f M-<backspace> i n d e x . h t m l <return> M-< C-s < h 2 C-s <return> C-s < u l > <return> <return> < l i > < a SPC h r e f = \" / C-y C-x b <return> M-x d i r e d - c o p y - f i l e n a m e - a s - k i l l <return> C-x b <return> C-y \" > C-x b <return> <return> M-< C-s < h 2 C-s C-s > <return> C-SPC C-s < / h 2 M-b C-b C-b M-w C-x k <return> C-x b <return> C-y < / a > < / l i > C-x C-s C-x k <return>"))
+
+(defalias 'soxan-update-news-articles
+  (kmacro "C-x C-f M-<backspace> i n d e x . h t m l <return> C-s ت ا ز ه ‌ ه ا <return> C-s < l i <return> M-b C-b C-SPC C-s < / u l C-a M-w C-x k <return> M-< C-s ت ا ز ه ‌ ه ا <return> C-s < l i <return> M-b C-b C-SPC C-s < / u l C-a <backspace> C-y"))
+
+(defalias 'soxan-update-news-root
+   (kmacro "C-x C-f i n d e x . h t m l <return> C-s ت ا ز ه ‌ ه ا <return> C-s < l i <return> M-b C-b C-SPC C-s < / u l C-a M-w C-x k <return> M-< C-s ت ا ز ه ‌ ه ا <return> C-s < l i <return> M-b C-b C-SPC C-s < / u l C-a <backspace> C-y"))
+
+(defalias 'soxan-add-to-contents
+   (kmacro "C-e C-x C-f M-<backspace> c o n t e n t s . h t m l <return> M-< C-s < h 2 C-s C-s <return> C-s < u l <return> C-e <return> < l i > < a SPC h r e f = \" / C-y C-x b <return> M-x d i r e d - c o p y - f i l e n a m e - a s - k i l l <return> C-x b <return> C-y \" > C-x b <return> <return> M-< C-s < h 2 C-s C-s <return> C-f C-SPC C-s < / h 2 <return> M-b C-b C-b M-w C-x k <return> C-x b <return> C-y < / a > < / l i > C-x C-s C-x k <return>"))
+
+(defun soxan-update-news ()
+  (interactive)
+  (let ((root-dir default-directory)
+        (articles-dir (expand-file-name "articles" default-directory)))
+    
+    (unless (file-directory-p articles-dir)
+      (error "No articles directory found in the current working directory"))
+
+    (dolist (file (directory-files root-dir t "^[^.]"))
+      (when (and (file-regular-p file)
+                 (string-match-p "\\.html$" file)
+                 (not (string= (file-name-nondirectory file) "index.html")))
+        (find-file file)
+        (soxan-update-news-root)
+        (save-buffer)
+        (kill-buffer)))
+
+    (dolist (file (directory-files articles-dir t "^[^.]"))
+      (when (and (file-regular-p file) (string-match-p "\\.html$" file))
+        (find-file file)
+        (soxan-update-news-articles)
+        (save-buffer)
+        (kill-buffer)))))
