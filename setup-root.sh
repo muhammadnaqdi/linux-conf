@@ -1,6 +1,6 @@
 apt -y update
 apt -y full-upgrade
-apt -y install build-essential gdb linux-headers-amd64 cmake clang clangd libclang-dev default-jdk mit-scheme sbcl emacs vim alacritty vlc qbittorrent openconnect git unzip p7zip-full wget curl aria2 ffmpeg htop pkg-config texinfo pandoc flatpak neofetch redshift picom nitrogen numlockx libghc-xmonad-contrib-dev suckless-tools xmonad xmobar scrot byzanz smlnj unclutter trayer blueman notification-daemon pcmanfm
+apt -y install build-essential gdb linux-headers-amd64 cmake clang clangd libclang-dev default-jdk mit-scheme sbcl emacs vim alacritty vlc qbittorrent openconnect git unzip p7zip-full wget curl aria2 ffmpeg htop pkg-config texinfo pandoc flatpak neofetch redshift picom nitrogen numlockx libghc-xmonad-contrib-dev suckless-tools xmonad xmobar scrot byzanz smlnj unclutter trayer blueman notification-daemon pcmanfm parcellite
 apt -y purge ibus
 apt -y autopurge
 apt -y clean
